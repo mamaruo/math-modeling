@@ -207,3 +207,8 @@ codegen/
 
 # Octave session info
 octave-workspace
+
+#################### Custom ####################
+# Images
+*.jpg
+*.png
