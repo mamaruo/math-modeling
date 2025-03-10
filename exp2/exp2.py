@@ -1,14 +1,32 @@
+"""
+实验二的代码文件。
+
+用于验证学生身份的MD5 hash: e7d9ba3a5b29e940b90797f28bbb96a4
+
+Author: mamaruo
+Created: 2025-03-03
+Last modified: 2025-03-10
+"""
+
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.legend_handler import HandlerTuple
 
 
 def chinese_fix():
+    """修复matplotlib中文显示问题"""
     plt.rcParams["font.family"] = "Microsoft YaHei"
     plt.rcParams["axes.unicode_minus"] = False
 
 
 def draw_sin_and_cos(stu_id: str, stu_name: str, save_path: str):
+    """绘制正弦和余弦函数图像，并保存到指定路径。
+
+        Args:
+            stu_id (str): 学号，用于在图像标题中显示。
+            stu_name (str): 姓名，用于在图像标题中显示。
+            save_path (str): 保存图像的路径。
+    """
     chinese_fix()
     plt.figure()  # 创建新图表，避免覆盖
     plt.title(f"正弦函数和余弦函数 {stu_id} {stu_name}")
@@ -149,4 +167,4 @@ def draw_heart_saddle(stu_id: str, stu_name: str, save_path: str):
 
 
 if __name__ == "__main__":
-    draw_heart_saddle("2023110224", "马若华", "exp2_2.png")
+    draw_heart_saddle("2023110224", "马若华", "output/exp2_2.png")

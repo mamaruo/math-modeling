@@ -209,6 +209,4 @@ codegen/
 octave-workspace
 
 #################### Custom ####################
-# Images
-*.jpg
-*.png
+output/
