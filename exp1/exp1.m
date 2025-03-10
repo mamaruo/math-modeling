@@ -6,16 +6,13 @@
 
 Author: mamaruo
 Created: 2025-02-24
-Last modified: 2025-03-09
+Last modified: 2025-03-10
 %}
 
-function exp1(stu_id, stu_name, save_path)
+function exp1()
     % 主函数，作为函数选择器
     while true
-        disp(['=========== 实验一函数选择器 ===========']);
-        disp(['学生ID: ', stu_id]);
-        disp(['学生姓名: ', stu_name]);
-        disp(['保存路径: ', save_path]);
+        disp('=========== 实验一函数选择器 ===========');
         disp('1. 冒泡排序');
         disp('2. 查找矩阵最大值');
         disp('3. 计算阶乘之和');

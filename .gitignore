@@ -210,3 +210,5 @@ octave-workspace
 
 #################### Custom ####################
 output/
+/matlab注释styleguide.docx
+/hash.py
