@@ -12,6 +12,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.legend_handler import HandlerTuple
 
+import os
+
 
 def chinese_fix():
     """修复matplotlib中文显示问题"""
@@ -167,4 +169,3 @@ def draw_heart_saddle(stu_id: str, stu_name: str, save_path: str):
 
 
 if __name__ == "__main__":
-    draw_heart_saddle("2023110224", "马若华", "output/exp2_2.png")
