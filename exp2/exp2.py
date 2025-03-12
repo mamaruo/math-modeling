@@ -169,3 +169,4 @@ def draw_heart_saddle(stu_id: str, stu_name: str, save_path: str):
 
 
 if __name__ == "__main__":
+    
