@@ -23,4 +23,4 @@
     - 求$y = x^{2}-5\sin x+\ln x$的导数。
     - 求$\displaystyle\int 3x+ \sin x$。
     - 求$\displaystyle\int\limits_{0}^{3}x\sin x$。
-    - 求$(x + y)^{5}$的展开式。
+    - 求$ (x + y)^{5}$的展开式。
