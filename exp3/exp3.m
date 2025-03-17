@@ -1,39 +1,128 @@
 % 实验三：图像处理和符号运算
-% 主函数 - 提供各部分实验的调用入口
 
-% 清空工作区和关闭所有图像
-clear;
-close all;
-clc;
+function exp3()
+% EXP3 - 主函数，用于选择并执行功能
+%
+% 本函数提供交互式界面，允许用户选择以下功能：
+%   1. 图像处理1 - 旋转、拼接和提取蓝色环
+%   2. 图像处理2 - 边缘检测、锐化和模糊化处理
+%   3. 符号运算 - 极限、导数、积分和多项式展开
+%   4. 全部功能
+%
+% 用户还可以控制是否显示处理结果和是否保存结果到文件
 
-% 读取配置文件
-try
-    % 获取当前脚本所在的目录路径
-    current_dir = fileparts(mfilename('fullpath'));
-    % 向上一层目录获取根目录
-    root_dir = fileparts(current_dir);
-    % 构建配置文件的完整路径
-    config_path = fullfile(root_dir, 'config.json');
-    
-    % 读取JSON配置文件
-    config_file = fileread(config_path);
-    config = jsondecode(config_file);
-    
-    % 获取工作目录
-    work_dir = config.work_dir;
-    
-    % 切换到指定的工作目录
-    cd(work_dir);
-    fprintf('已切换到工作目录: %s\n', work_dir);
-catch e
-    fprintf('读取配置文件出错: %s\n', e.message);
+    clear;
+    close all;
+    clc;
+
+    % 读取配置文件
+    try
+        % 获取当前脚本所在的目录路径
+        current_dir = fileparts(mfilename('fullpath'));
+        % 向上一层目录获取根目录
+        root_dir = fileparts(current_dir);
+        % 构建配置文件的完整路径
+        config_path = fullfile(root_dir, 'config.json');
+        
+        % 读取JSON配置文件
+        config_file = fileread(config_path);
+        config = jsondecode(config_file);
+        
+        % 获取工作目录
+        work_dir = config.work_dir;
+        
+        % 切换到指定的工作目录
+        cd(work_dir);
+        fprintf('已切换到工作目录: %s\n', work_dir);
+    catch e
+        fprintf('读取配置文件出错: %s\n', e.message);
+    end
+
+    while true
+        % 显示功能菜单
+        disp('=== 实验三功能选择 ===');
+        disp('1. 图像处理1 - 旋转、拼接和提取蓝色环');
+        disp('2. 图像处理2 - 边缘检测、锐化和模糊化处理');
+        disp('3. 符号运算 - 极限、导数、积分和多项式展开');
+        disp('4. 执行全部功能');
+        disp('0. 退出');
+        
+        % 获取用户选择
+        disp('请输入功能编号 (0-4): ');
+        choice = input('');
+        
+        % 如果用户选择退出，则直接返回
+        if choice == 0
+            disp('程序已退出');
+            return;
+        end
+        
+        % 检查选择是否有效
+        if ~ismember(choice, [1, 2, 3, 4])
+            disp('无效的选择，请输入0-4之间的数字');
+            continue;
+        end
+        
+        % 询问是否显示结果
+        show_results = ask_yes_no('是否显示处理结果？包括控制台回显和图片窗口显示。 (y/n)：');
+        
+        % 询问是否保存结果
+        save_results = ask_yes_no('是否保存处理结果到文件? (y/n)：');
+        
+        % 根据选择执行相应功能
+        switch choice
+            case 1
+                % 执行图像处理1
+                img_process1(show_results, save_results);
+            case 2
+                % 执行图像处理2
+                img_process2(show_results, save_results);
+            case 3
+                % 执行符号运算
+                symbolic_math(show_results, save_results);
+            case 4
+                % 执行全部功能
+                img_process1(show_results, save_results);
+                img_process2(show_results, save_results);
+                symbolic_math(show_results, save_results);
+                disp('执行完全部功能，即将退出。');
+                return;
+        end
+        
+        disp('功能执行完毕!');
+    end
 end
 
-% 图像处理2
-% img_process1(true, true);
-% img_process2(true, true);
-% 符号运算
-symbolic_math(true, true);
+
+function answer = ask_yes_no(prompt)
+% ASK_YES_NO - 获取用户的是/否回答
+%
+% 语法:
+%   answer = ask_yes_no(prompt)
+%
+% 输入参数:
+%   prompt - 提示用户的字符串
+%
+% 输出参数:
+%   answer - 逻辑值，true表示"是"，false表示"否"
+
+    while true
+        disp(prompt);
+        user_input = input('', 's');
+        if isempty(user_input)
+            user_input = 'y';  % 默认为"是"
+        end
+        if strcmpi(user_input(1), 'y')
+            answer = true;
+            break;
+        elseif strcmpi(user_input(1), 'n')
+            answer = false;
+            break;
+        else
+            disp('请输入 y(是) 或 n(否)');
+        end
+    end
+end
 
 % ---------------------------------------------
 function img_process1(show_images, save_images)
@@ -75,7 +164,6 @@ function img_process1(show_images, save_images)
 
     % 根据显示参数决定是否显示图像
     if show_images
-        % 显示原图像和旋转后的图像
         figure('Position', [100, 100, 1800, 600]);
         subplot(1, 3, 1);
         imshow(img);
