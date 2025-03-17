@@ -19,8 +19,8 @@
     - 挑选一个图像，对其进行锐化和模糊化处理。
 
 3. 符号运算
-    - 求$\lim_{x \to 1}\frac{x^{2}-1}{x - 1}$的值。
+    - 求$\displaystyle\lim_{x \to 1}\frac{x^{2}-1}{x - 1}$的值。
     - 求$y = x^{2}-5\sin x+\ln x$的导数。
-    - 求$\displaystyle\int 3x+ \sin x$。
-    - 求$\displaystyle\int\limits_{0}^{3}x\sin x$。
+    - 求$\displaystyle\int \left(3x+ \sin x \right)\textrm{d}x$。
+    - 求$\displaystyle\int\limits_{0}^{3}\left (x\sin x \right) \textrm{d}x$。
     - 求$ (x + y)^{5}$的展开式。

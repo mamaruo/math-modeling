@@ -398,20 +398,20 @@ function symbolic_math(show_results, save_results)
         % 写入结果到文件
         fprintf(fileID, '# 符号运算结果\n\n');
 
-        fprintf(fileID, '- 1.求$\\displaystyle \\lim_{x \\to 1}\\frac{x^2-1}{x-1}$的值\n');
+        fprintf(fileID, '- 1. 求$\\displaystyle\\lim_{x \\to 1}\\frac{x^{2}-1}{x - 1}$的值\n');
         fprintf(fileID, '  - 结果: $\\displaystyle %s$\n\n', latex(limit_result));
 
-        fprintf(fileID, '- 2.求$\\displaystyle y = x^2-5\\sin x+\\ln x$的导数\n');
+        fprintf(fileID, '- 2. 求$y = x^{2}-5\\sin x+\\ln x$的导数\n');
         fprintf(fileID, '  - 结果: $\\displaystyle %s$\n\n', latex(deriv_result));
 
-        fprintf(fileID, '- 3. 求$\\displaystyle\\int(3x+\\sin x)dx$\n');
+        fprintf(fileID, '- 3. 求$\\displaystyle\\int \\left(3x+ \\sin x \\right)\\textrm{d}x$\n');
         fprintf(fileID, '  - 结果: $\\displaystyle %s + C$\n\n', latex(indef_integral));
 
-        fprintf(fileID, '- 4. 求$\\displaystyle\\int_{0}^{3}x\\sin x dx$\n');
+        fprintf(fileID, '- 4. 求$\\displaystyle\\int\\limits_{0}^{3}\\left (x\\sin x \\right) \\textrm{d}x$\n');
         fprintf(fileID, '  - 结果: $\\displaystyle %s$\n', latex(def_integral));
         fprintf(fileID, '  - 数值近似: $\\approx %.6f$\n\n', double(def_integral));
 
-        fprintf(fileID, '- 5. 求$(x+y)^5$的展开式\n');
+        fprintf(fileID, '- 5. 求$(x + y)^{5}$的展开式\n');
         fprintf(fileID, '  - 结果: $\\displaystyle %s$\n\n', latex(expanded));
 
         % 关闭文件
