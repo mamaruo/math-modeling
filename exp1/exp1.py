@@ -5,7 +5,7 @@
 
 Author: mamaruo
 Created: 2025-02-24
-Last modified: 2025-02-25
+Last modified: 2025-03-24
 """
 
 from typing import Tuple, Union
@@ -91,12 +91,12 @@ def sum_of_factorials(n: int = 20) -> int:
 
 
 def ball_bounce(
-    initial_height: Union[float, int], times: int = 10
+    initial_height: Union[float, int] = 100, times: int = 10
 ) -> Tuple[Union[float, int], Union[float, int]]:
     """计算球从初始高度落下后第times次弹跳的高度和总距离。
 
     Args:
-        initial_height (Union[float, int]): 初始高度。
+        initial_height (Union[float, int]): 初始高度。Defaults to 100.
         times (int, optional): 弹跳次数. Defaults to 10.
 
     Returns:
@@ -130,3 +130,11 @@ def calculate_function_value(x: Union[float, int], y: Union[float, int]) -> floa
         float: 函数值
     """
     return x**2 + np.sin(x * y) + 2 * y
+
+
+if __name__ == "__main__":
+    print(bubble_sort(np.array([3, 2, 1, 4, 5])))
+    print(find_max_in_matrix(np.array([[1, 2, 3], [4, 51, 6], [7, 8, 9]])))
+    print(sum_of_factorials())
+    print(ball_bounce())
+    print(calculate_function_value(np.pi, 4))

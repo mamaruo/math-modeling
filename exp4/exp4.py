@@ -1,7 +1,38 @@
-import pulp
+import json
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
+import pulp
 
+
+def change_working_directory():
+    """
+    读取配置文件并切换工作目录
+    """
+    try:
+        # 获取当前脚本所在的目录路径
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        # 向上一层目录获取根目录
+        root_dir = os.path.dirname(current_dir)
+        # 构建配置文件的完整路径
+        config_path = os.path.join(root_dir, 'config.json')
+        
+        # 读取JSON配置文件
+        with open(config_path, 'r', encoding='utf-8') as config_file:
+            config = json.load(config_file)
+        
+        # 获取工作目录
+        work_dir = config['work_dir']
+        
+        # 切换到指定的工作目录
+        os.chdir(work_dir)
+        print(f'已切换到工作目录: {work_dir}')
+    except Exception as e:
+        print(f'读取配置文件出错: {e}')
+
+# 调用函数切换工作目录
+change_working_directory()
 
 def solve_problem_1_integer():
     """
@@ -90,35 +121,48 @@ def visualize_solutions(x_int, y_int, z_int, x_cont, y_cont, z_cont):
     """
     # 创建画布
     plt.figure(figsize=(10, 6))
-    plt.rcParams["font.sans-serif"] = ["SimHei"]
-    plt.rcParams["axes.unicode_minus"] = False
+    plt.rcParams.update({
+        "font.sans-serif": "SimHei",
+        "axes.unicode_minus": False,
+        "text.usetex": True,
+        "text.latex.preamble": r"\usepackage{CJK}",
+        })
 
     # 定义区域范围
     x = np.linspace(0, 10, 1000)
-    
+
     # 计算各约束下的y值
     y1 = (60 - 6 * x) / 5  # 原料约束: 6x + 5y <= 60
     y2 = (150 - 10 * x) / 20  # 工人约束: 10x + 20y <= 150
-    
+
     # 应用x的约束: x <= 8
     x_mask = x <= 8
-    
+
     # 计算可行域上界
     y_upper = np.minimum(y1, y2)
     y_upper[~x_mask] = 0  # 将x>8的区域设置为0（不可行）
-    
+
     # 确保y非负
     y_upper = np.maximum(y_upper, 0)
-    
+
     # 绘制可行域（确保在坐标轴底层）
-    plt.fill_between(x, 0, y_upper, where=x_mask, alpha=0.3, color="skyblue", label="可行域", zorder=1)
-    
+    plt.fill_between(
+        x,
+        0,
+        y_upper,
+        where=x_mask,
+        alpha=0.3,
+        color="skyblue",
+        label=r"\begin{CJK}{UTF8}{song}可行域\end{CJK}",
+        zorder=1,
+    )
+
     # 绘制约束边界
-    plt.plot(x, y1, "r-", label="原料约束: 6x + 5y = 60", zorder=2)
-    plt.plot(x, y2, "g-", label="工人约束: 10x + 20y = 150", zorder=2)
-    plt.axvline(x=8, color="purple", linestyle='-', label="产量限制: x = 8", zorder=2)
-    plt.axhline(y=0, color="black", linestyle='-', zorder=2)
-    plt.axvline(x=0, color="black", linestyle='-', zorder=2)
+    plt.plot(x, y1, "r-", label=r"\begin{CJK}{UTF8}{song}原料约束：\end{CJK}$6x + 5y = 60$", zorder=2)
+    plt.plot(x, y2, "g-", label=r"\begin{CJK}{UTF8}{song}工人约束:\end{CJK}$10x + 20y = 150$", zorder=2)
+    plt.axvline(x=8, color="purple", linestyle="-", label=r"\begin{CJK}{UTF8}{song}产量限制:\end{CJK} $x = 8$", zorder=2)
+    plt.axhline(y=0, color="black", linestyle="-", zorder=2)
+    plt.axvline(x=0, color="black", linestyle="-", zorder=2)
 
     # 绘制整数最优解点
     plt.scatter(
@@ -128,7 +172,7 @@ def visualize_solutions(x_int, y_int, z_int, x_cont, y_cont, z_cont):
         s=100,
         marker="*",
         zorder=5,
-        label=f"整数规划最优解 ({x_int:.0f}, {y_int:.0f}) z={z_int:.2f}万元",
+        label=rf"\begin{{CJK}}{{UTF8}}{{song}}整数规划最优解 $({x_int:.0f}, {y_int:.0f})$ $z={z_int:.2f}$万元\end{{CJK}}",
     )
 
     # 绘制连续最优解点
@@ -139,7 +183,7 @@ def visualize_solutions(x_int, y_int, z_int, x_cont, y_cont, z_cont):
         s=100,
         marker="o",
         zorder=5,
-        label=f"连续规划最优解 ({x_cont:.2f}, {y_cont:.2f}) z={z_cont:.2f}万元",
+        label=rf"\begin{{CJK}}{{UTF8}}{{song}}连续规划最优解 $({x_cont:.2f}, {y_cont:.2f})$ $z={z_cont:.2f}$万元\end{{CJK}}",
     )
 
     # 绘制一些目标函数的等值线
@@ -157,18 +201,19 @@ def visualize_solutions(x_int, y_int, z_int, x_cont, y_cont, z_cont):
     # 设置图表属性
     plt.xlim(0, 10)
     plt.ylim(0, 10)
-    plt.xlabel("甲饮料产量 x (百箱)")
-    plt.ylabel("乙饮料产量 y (百箱)")
-    plt.title("饮料生产规划问题的图解 - 整数规划与连续规划对比")
+    plt.xlabel(r"\begin{CJK}{UTF8}{song}甲饮料产量 $x$ (百箱)\end{CJK}")
+    plt.ylabel(r"\begin{CJK}{UTF8}{song}乙饮料产量 $y$ (百箱)\end{CJK}")
+    plt.title(r"\begin{CJK}{UTF8}{song}饮料生产规划问题的图解 - 整数规划与连续规划对比\end{CJK}")
     plt.grid(True)
     plt.legend()
 
     # 保存图像
-    plt.savefig("problem1_solutions_comparison.png", dpi=300, bbox_inches="tight")
+    plt.savefig("outputs/4/problem1_solutions_comparison.png", dpi=300, bbox_inches="tight")
     plt.show()
 
 
 if __name__ == "__main__":
+    change_working_directory()
     # 求解整数规划问题
     print("===== 整数线性规划求解 =====")
     x_int, y_int, z_int = solve_problem_1_integer()
